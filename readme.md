@@ -33,6 +33,7 @@ Valid images extensions: png, jpg, jpeg
     - With the ENTER key you can move to the next word.
     - With the BACKSPACE key you go back to the previous word (of the same line)
     - With the DEL key you can delete an alignmnt
+    - With the 'j' key you can input (in the console for now) the index od the ngram to jump  
     - With the cntrl+s keys you save the state
     - With the cntrl+q keys you can close the GUI (or just with 'q', it depends on your CV2 version)
     

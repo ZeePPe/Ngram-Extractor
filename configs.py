@@ -15,8 +15,9 @@ PERFORMANCE_BASEFOLDER =  os.path.join("out","performance")
 PERFORMANCE_FILENAME = "performance.txt"
 
 # BOX segmenter parame
-BOX_TRANSPARENCY_ALPHA = 0.3
-BOX_BORDER = 1
+BOX_IN_TRANSPARENCY_ALPHA = 0.2
+BOX_TRANSPARENCY_ALPHA = 0.4
+BOX_BORDER = 1 # 
 BOX_COLOR = (0,255,0)
 
 #reference height
@@ -28,3 +29,6 @@ MAX_NGRAM = 3
 
 # len ngramfile name
 MAX_LEN_NGRAM_NAME = 4
+
+# Main Window
+MIN_WIDTH_MAINW = 250
