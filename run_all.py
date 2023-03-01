@@ -12,3 +12,6 @@ import crop_all_ngrams
 
 print("\n Saving all Ngrams in word subfolders...")
 import crop_ngrams
+
+print("\n Creating the training file...")
+import create_training_file

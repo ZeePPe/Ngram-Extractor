@@ -14,6 +14,10 @@ TIME_WORDCORRECTION_FILENAME = "time_align_correction.txt"
 PERFORMANCE_BASEFOLDER =  os.path.join("out","performance")
 PERFORMANCE_FILENAME = "performance.txt"
 
+ANNOTATION_TRAININGFILE_FOLDER = os.path.join("out","annotation")
+ANNOTATION_TRAININGFILENAME = "train.txt"
+ANNOTATION_BASEWORDS_FOLDER = "words"
+
 # BOX segmenter parame
 BOX_IN_TRANSPARENCY_ALPHA = 0.2
 BOX_TRANSPARENCY_ALPHA = 0.4

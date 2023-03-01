@@ -1,5 +1,5 @@
 # Ngrams builder
-The repo contqains the methods to segment words in ngrams.
+The repo contains the methods to segment words in ngrams.
 It takes words image and generate all ngrams included in the imagese.
 
 
@@ -43,12 +43,14 @@ Valid images extensions: png, jpg, jpeg
    The process also measures the automatic segmentation performance:
    a file will be saved in the ```Performance``` folder.
 
-## Daving ngrams images
+## Saving ngrams images
 
 1. run the file ```crop_all_ngrams.py``` to generate a single folder with all the ngrams.
 
 2. run the file ```crop_ngrams.py``` to generate a folder containing a subfolder for each word with all the releted ngrams.
 
+## Save the training file
+1. run the file  ```create_training_file.py``` to henerate the txt file for the training containing the bounding box position for each ngrams in all the words
 
 # One shot run
 You can run all the script in one time running the file
