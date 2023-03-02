@@ -109,26 +109,31 @@ def correct_aligns(aligns, outfile="out"):
                     curr_img[0:line_img.shape[0], 0:line_img.shape[1], 0:line_img.shape[2]] = line_img
                     
                     #text under box ----------------------
-                    img = Image.new('RGB', (len(trans)*20, 40), color = (0, 0, 0))
+                    _,_,w_text,h_text = text_width = FONT_BOLD_PIL.getmask(trans).getbbox()
+                    #img = Image.new('RGB', (len(trans)*20, 40), color = (0, 0, 0))
+                    img = Image.new('RGB', (w_text, 40), color = (0, 0, 0))
                     d = ImageDraw.Draw(img)
+                    ImageFont.truetype('assets/font/AlteHaasGroteskBold.ttf', 30)
                     d.text((0,0), trans, font=FONT_BOLD_PIL,  fill=(128, 240, 128))
                     img = np.asarray(img)
                     bottom_margin = 55
                     y_start = curr_img.shape[0]-(40+bottom_margin)
                     y_end = curr_img.shape[0]-bottom_margin
                     x_start = box[0]
-                    x_end = box[0]+len(trans)*20
+                    x_end = box[0]+w_text
                     if x_end >curr_img.shape[1]:
                         x_end = curr_img.shape[1]
                     curr_img[y_start:y_end,x_start:x_end, : ] = img[:,:(x_end-x_start),:]
                 
                     # text bottom trans ----------------------
-                    img = Image.new('RGB', (len(trans)*25, 30), color = (0, 0, 0))
+                    _,_,w_text,h_text = text_width = FONT_BOLD_PIL.getmask(trans).getbbox()
+                    r_padding = 10
+                    img = Image.new('RGB', (w_text+r_padding, 30), color = (0, 0, 0))
                     d = ImageDraw.Draw(img)
-                    d.text((10,0), trans, font=FONT_REGULAR_PIL,  fill=(255,200,200))
+                    d.text((r_padding,0), trans, font=FONT_REGULAR_PIL,  fill=(255,200,200))
                     img = np.asarray(img) 
                     bottom_margin = 1
-                    curr_img[curr_img.shape[0]-(30+bottom_margin):curr_img.shape[0]-bottom_margin,0:len(trans)*25, : ] = img
+                    curr_img[curr_img.shape[0]-(30+bottom_margin):curr_img.shape[0]-bottom_margin,0:w_text+r_padding, : ] = img
 
                     # state of progression ----------------------
                     str_curr_position =  f"{count}/{all_aligns}"
@@ -158,7 +163,7 @@ def correct_aligns(aligns, outfile="out"):
                             #curr_indword = 0
                             curr_indword = TEST_PREV_LINE
                             count += 1
-                    elif key_pressed == 46 or key_pressed == 0:
+                    elif key_pressed == 46 or key_pressed == 0 or key_pressed == 255:
                         print(f"  --> Deleted!!!")
                         del boxes[curr_indword]
                         del transcriptions[curr_indword]
