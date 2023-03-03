@@ -24,7 +24,10 @@ FONT_BOLD_PIL = ImageFont.truetype('assets/font/AlteHaasGroteskBold.ttf', 30)
 FONT_CV = cv2.FONT_HERSHEY_SIMPLEX
 
 
-def correct_aligns(aligns, outfile="out"):
+def correct_aligns(in_aligns, outfile="out"):
+
+    aligns = copy.deepcopy(in_aligns)
+
     count = 1
     all_aligns = _get_aligns_number(aligns)
 
@@ -51,6 +54,9 @@ def correct_aligns(aligns, outfile="out"):
             (boxes, transcriptions) = all_lines[line_filename]
 
             if len(boxes)<=0:
+                # delete from align
+                del all_lines[line_filename]
+                del keys_list_lines[curr_indline]
                 curr_indline += 1
             else:
                 # leggi immagine
@@ -109,7 +115,7 @@ def correct_aligns(aligns, outfile="out"):
                     curr_img[0:line_img.shape[0], 0:line_img.shape[1], 0:line_img.shape[2]] = line_img
                     
                     #text under box ----------------------
-                    _,_,w_text,h_text = text_width = FONT_BOLD_PIL.getmask(trans).getbbox()
+                    _,_,w_text,h_text = FONT_BOLD_PIL.getmask(trans).getbbox()
                     #img = Image.new('RGB', (len(trans)*20, 40), color = (0, 0, 0))
                     img = Image.new('RGB', (w_text, 40), color = (0, 0, 0))
                     d = ImageDraw.Draw(img)
@@ -126,7 +132,7 @@ def correct_aligns(aligns, outfile="out"):
                     curr_img[y_start:y_end,x_start:x_end, : ] = img[:,:(x_end-x_start),:]
                 
                     # text bottom trans ----------------------
-                    _,_,w_text,h_text = text_width = FONT_BOLD_PIL.getmask(trans).getbbox()
+                    _,_,w_text,h_text = FONT_BOLD_PIL.getmask(trans).getbbox()
                     r_padding = 10
                     img = Image.new('RGB', (w_text+r_padding, 30), color = (0, 0, 0))
                     d = ImageDraw.Draw(img)
@@ -159,11 +165,13 @@ def correct_aligns(aligns, outfile="out"):
                         # backspace
                         count -= 1
                         curr_indword -= 1
+                        print(curr_indword)
                         if curr_indword <0:
                             #curr_indword = 0
                             curr_indword = TEST_PREV_LINE
                             count += 1
                     elif key_pressed == 46 or key_pressed == 0 or key_pressed == 255:
+                        # Canc Del
                         print(f"  --> Deleted!!!")
                         del boxes[curr_indword]
                         del transcriptions[curr_indword]
@@ -179,7 +187,7 @@ def correct_aligns(aligns, outfile="out"):
                         #quit and save
                         print("-------- SAVE STATE -------")
                         save_alignments(aligns, outfile)
-                        return
+                        return aligns
                         #exit()
                     elif(key_pressed == 106):
                         # j
@@ -229,6 +237,7 @@ def correct_aligns(aligns, outfile="out"):
                 from_next_doc = True
                 curr_inddoc -= 1
                 count -= 1
+    return aligns
 
 def _get_next_curr_ind(jump_to, aligns):
     inddoc = 0 
@@ -402,12 +411,14 @@ def mesure_performnace(original_aligns, correct_aligns):
 
 
 
-aligns = load_aligments(ALIGNMENT_FILE)
-orig_aligns = copy.deepcopy(aligns)
+#aligns = load_aligments(ALIGNMENT_FILE)
+#orig_aligns = copy.deepcopy(aligns)
+
+orig_aligns = load_aligments(ALIGNMENT_FILE)
 
 start_time = time.time()
 
-correct_aligns(aligns, outfile=ALIGNMENT_FILE)
+aligns = correct_aligns(orig_aligns, outfile=ALIGNMENT_FILE)
 total_time = time.time() - start_time
 
 now = datetime.now()
