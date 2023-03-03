@@ -6,7 +6,9 @@ OUT_MIM_FOLDER = os.path.join("out","out_align")
 OUT_MIM_FILENAME = "all_align.als"
 
 OUT_ALL_NGRAMS_FOLDER =  os.path.join("out","out_all_ngrams")
+OUT_ALL_NGRAMS_INONE_FOLDER =  os.path.join("out","out_all_ngrams_inone")
 OUT_NGRAMS_FOLDER =  os.path.join("out","out_ngrams")
+
 
 TIME_BASEFOLDER =  os.path.join("out","time")
 TIME_WORDCORRECTION_FILENAME = "time_align_correction.txt"

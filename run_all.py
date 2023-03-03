@@ -9,6 +9,7 @@ import segmentation_tool
 
 print("\n Saving all Ngrams...")
 import crop_all_ngrams
+import crop_all_ngrams_in_one
 
 print("\n Saving all Ngrams in word subfolders...")
 import crop_ngrams
