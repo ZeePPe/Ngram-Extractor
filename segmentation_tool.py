@@ -372,7 +372,7 @@ def mesure_performnace(original_aligns, correct_aligns):
     for doc_id in original_aligns:
         original_lines_dic = original_aligns[doc_id]
         corrected_lines_dic = correct_aligns[doc_id]
-        for line_id in original_lines_dic:
+        for line_id in corrected_lines_dic:
             original_boxes, transcrips = original_lines_dic[line_id]
             corrected_boxes, _ = corrected_lines_dic[line_id]
 
