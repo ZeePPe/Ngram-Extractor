@@ -13,8 +13,10 @@ def crop_all_words(aligns, dst_folder="out"):
         shutil.rmtree(dst_folder)
     os.mkdir(dst_folder)
 
+    curr_in = 0
+
     for _, all_lines in tqdm(aligns.items()):
-        for word_filename, (boxes, transcriptions) in all_lines.items():
+        for word_filename, (boxes, transcriptions) in tqdm(all_lines.items()):
             # leggi immagine
             line_img = cv2.imread(os.path.join(configs.WORDS_FOLDER, word_filename), cv2.IMREAD_GRAYSCALE)
 
@@ -24,9 +26,13 @@ def crop_all_words(aligns, dst_folder="out"):
             inline_pos = 0
             bi_position = 0
             tri_position = 0
+            
             for box, trans in zip(boxes, transcriptions):
-                if box[0]==box[1]:
-                    print(f"Not possible to save {word_filename}")
+                curr_in += 1
+                
+                if box[0]>=box[1]:
+                    print(f"Not possible to save {word_filename} ngram {trans}, ind {curr_in}")
+                    print()
                 else:
                     name = id_word
                     if len(trans) == 2:
@@ -38,9 +44,8 @@ def crop_all_words(aligns, dst_folder="out"):
                     else:
                         name += "-n-"+str(inline_pos).zfill(3)
                         inline_pos += 1
-
+                
                 dst_filename = name+"_"+trans+"."+extension
-
                 word_img = line_img[: , box[0]:box[1]]
                 cv2.imwrite(os.path.join(dst_folder, dst_filename), word_img)
 
